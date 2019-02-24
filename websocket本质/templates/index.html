@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<h1>丑男投票系统</h1>
+
+<ul>
+    {% for k,v in users.items() %}
+    <li onclick="vote({{k}})" id="id_{{k}}">{{v.name}}<span>{{v.count}}</span></li>
+    {% endfor %}
+</ul>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    var ws = new WebSocket('ws://127.0.0.1:5000/message')
+    ws.onmessage = function (event) {
+        /* 服务器端向客户端发送数据时，自动执行 */
+
+        var response = JSON.parse(event.data);
+        $('#id_'+response.cid).find('span').text(response.count)
+    };
+    function vote(cid) {
+        ws.send(cid)
+    }
+</script>
+</body>
+</html>
