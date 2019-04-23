@@ -4,7 +4,7 @@ from twisted.web.client import getPage, defer
 from twisted.internet import reactor
 
 
-def stop_loop(arg):
+def stop_loop(arg):  # 停止循环
     reactor.stop()
 
 
@@ -27,7 +27,7 @@ for url in url_list:
     deferred.addCallback(get_response)
     deferred_list.append(deferred)
 
-dlist = defer.DeferredList(deferred_list)
+dlist = defer.DeferredList(deferred_list) # 监听是否完成了 完成了就执行下面
 dlist.addBoth(stop_loop)
 
 reactor.run()

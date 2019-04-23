@@ -16,3 +16,5 @@ def task(url):
 for url in urls:
     t = threading.Thread(target=task,args=(url,))
     t.start()
+
+    # 缺点线程的利用率不高
